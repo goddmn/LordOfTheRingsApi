@@ -14,6 +14,7 @@ import com.example.lordoftherings.model.CharacterModel
 import com.example.lordoftherings.network.ApiService
 import com.example.lordoftherings.ui.main.MainActivity
 import com.example.lordoftherings.utils.UiManager
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_character.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -56,18 +57,22 @@ class CharacterFragment : Fragment() {
                     UiManager.showShortToast(context!!, "onFailure")
                 }
 
-                override fun onResponse(
-                    call: Call<CharacterModel>,
-                    response: Response<CharacterModel>
-                ) {
+                override fun onResponse(call: Call<CharacterModel>, response: Response<CharacterModel>) {
                     val listOfDocs = response.body()!!.docs
                     recyclerAdapter.setCharaterListItems(listOfDocs)
-                    UiManager.showShortToast(context!!, "onResponse")
                     btn_show_charaters.visibility = View.GONE
                 }
 
             })
         }
+    }
+    fun startCharacterDetail(){
+        val fragment = CharacterDetailsFragment()
+        val fm = activity?.supportFragmentManager
+        val transaction = fm?.beginTransaction()
+        transaction?.add(R.id.character_container, fragment)
+        transaction?.addToBackStack(null)
+        transaction?.commit()
     }
 }
 

@@ -16,6 +16,7 @@
         android:textColor="#fff"
         android:textStyle="bold"/>
 
+
 <RelativeLayout
     android:id="@+id/main_container"
     android:layout_width="match_parent"

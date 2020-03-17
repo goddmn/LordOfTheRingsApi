@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lordoftherings.R
 import com.example.lordoftherings.model.CharacterModel
 import com.example.lordoftherings.model.Docs
+import com.example.lordoftherings.ui.main.MainActivity
 import com.example.lordoftherings.utils.UiManager
 
 class CharacterAdapter(val context: Context) : RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
     var characterList : List<Docs> = listOf()
-
 
     class ViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         val tvId: TextView = itemView.findViewById(R.id.id_txt)
@@ -30,6 +30,13 @@ class CharacterAdapter(val context: Context) : RecyclerView.Adapter<CharacterAda
         val tvHair: TextView = itemView.findViewById(R.id.hair_txt)
         val tvName: TextView = itemView.findViewById(R.id.name_txt)
         val tvWikiUrl: TextView = itemView.findViewById(R.id.wiki_url_txt)
+
+        fun <T : RecyclerView.ViewHolder> T.listen(event: (position: Int, type: Int) -> Unit): T {
+            itemView.setOnClickListener {
+                event.invoke(getAdapterPosition(), getItemViewType())
+            }
+            return this
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterAdapter.ViewHolder {
@@ -55,6 +62,7 @@ class CharacterAdapter(val context: Context) : RecyclerView.Adapter<CharacterAda
         holder.tvName.text = "NAME : ${characterList.get(position).name}"
         holder.tvWikiUrl.text = "WIKI : ${characterList.get(position).wikiUrl}"
     }
+
     fun setCharaterListItems(todoList: List<Docs>){
         this.characterList = todoList
         notifyDataSetChanged()
